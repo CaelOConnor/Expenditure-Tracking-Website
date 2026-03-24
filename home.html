@@ -1,56 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="description" content="Overview of Expenditure Tracking Website"/>
-        <meta name="viewport" content="width=device-width, intial-scale=1.0"/>
-        <title>Home Page</title> 
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Overview of Expenditure Tracking Website"
+    />
+    <meta name="viewport" content="width=device-width, intial-scale=1.0" />
+    <title>Home Page</title>
 
-        <link href="css/home_styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <header class="navbar">
-            <p class="logo">Welcome USER</p>
-            <ul class="nav-list">
-                <li><a href="index.html">Account</a></li>
-            </ul>
-        </header>
-        <main class="wrapper">
-            <div class="expenditure-buttons-container">
-                <nav class="home-buttons">
-                    <ul class="nav-list">
-                        <li> <button type="button"> Add</button> </li>
-                        <li> <input type="search" placeholder="Search"/> </li>
-                        <li> <select value="Sort By:"> Sort By</select></li>
+    <link href="css/home_styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="navbar">
+      <p class="logo">Welcome USER</p>
+      <ul class="nav-list">
+        <li><a href="index.html">Account</a></li>
+      </ul>
+    </header>
+    <main class="wrapper">
+      <div class="expenditure-buttons-container">
+        <nav class="home-buttons">
+          <ul class="nav-list">
+            <li><button type="button">Add</button></li>
+            <li><input type="search" placeholder="Search" /></li>
+            <li>
+              <select value="Sort By:">
+                Sort By
+              </select>
+            </li>
 
-                        <li> <button type="button"> Trends</button></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="expenditures-container">
-                <div class="expenditure-container">
-                    <h1>Most Recent</h1>
-                    <div class="expenditure">
-                        <button class="expenditure-three-dots-btn">...</button>
-                        <h2 class="amount">Amount</h2>
-                        <p class="type">Type</p>
-                        <p class="description">Description</p>
-                        <p class="date">Date</p>
-                    </div>
-                </div>
+            <li>
+              <a href="trends.html"><button type="button">Trends</button></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="expenditures-container">
+        <div class="expenditure-container">
+          <h1>Most Recent</h1>
+          <div class="expenditure">
+            <button class="expenditure-three-dots-btn">...</button>
+            <h2 class="amount">Amount</h2>
+            <p class="type">Type</p>
+            <p class="description">Description</p>
+            <p class="date">Date</p>
+          </div>
+        </div>
 
-                <div class="expenditure-container">
-                    <h1>Highest Expenditure</h1>
-                    <div class="expenditure">
-                        <button class="expenditure-three-dots-btn">...</button>
-                        <h2 class="amount">Amount</h2>
-                        <p class="type">Type</p>
-                        <p class="description">Description</p>
-                        <p class="date">Date</p>
-                    </div>
-                </div>
-            </div>   
-        </main>
-        <script src="script.js"></script>
-    </body>
+        <div class="expenditure-container">
+          <h1>Highest Expenditure</h1>
+          <div class="expenditure">
+            <button class="expenditure-three-dots-btn">...</button>
+            <h2 class="amount">Amount</h2>
+            <p class="type">Type</p>
+            <p class="description">Description</p>
+            <p class="date">Date</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>
