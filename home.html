@@ -13,9 +13,15 @@
   </head>
   <body>
     <header class="navbar">
-      <p class="logo">Welcome USER</p>
+      <p class="logo">Welcome, USER!</p>
       <ul class="nav-list">
-        <li><a href="index.html">Account</a></li>
+        <li class="dropdown">
+          <a class="dropbtn">Account</a>
+          <ul class="dropdown-content">
+            <a href="settings.html" class="dropbtn">Settings</a>
+            <a href="index.html" class="dropbtn">Logout</a>
+          </ul>
+        </li>
       </ul>
     </header>
     <main class="wrapper">
@@ -59,11 +65,28 @@
           </div> -->
         </div>
       </div>
+
+      <div class="add-item-popup" >
+        <div class="input-list">
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount">
+          <label for="type">Type:</label>
+          <input type="text" id="type">
+          <label for="description">Description:</label>
+          <input type="text" id="description">
+          <label for="date">Date:</label>
+          <input type="date" id="date">
+          <button type="submit">Submit</button>
+          <button id="close-popup-btn">Cancel</button>
+        </div>
+      </div>
+
     </main>
     <script type="module">
       import App from "./js/Expenses.js";
 
       const app = new App();
     </script>
+    <script src="./js/Add-expenditure-popup.js"></script> 
   </body>
 </html>
