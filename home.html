@@ -22,7 +22,7 @@
       <div class="expenditure-buttons-container">
         <nav class="home-buttons">
           <ul class="nav-list">
-            <li><button type="button">Add</button></li>
+            <li><button id="add-expense" type="button">Add</button></li>
             <li><input type="search" placeholder="Search" /></li>
             <li>
               <select value="Sort By:">
@@ -37,29 +37,33 @@
         </nav>
       </div>
       <div class="expenditures-container">
-        <div class="expenditure-container">
+        <div id="recent-expenses" class="expenditure-container">
           <h1>Most Recent</h1>
-          <div class="expenditure">
+          <!-- <div class="expenditure">
             <button class="expenditure-three-dots-btn">...</button>
             <h2 class="amount">Amount</h2>
             <p class="type">Type</p>
             <p class="description">Description</p>
             <p class="date">Date</p>
-          </div>
+          </div> -->
         </div>
 
-        <div class="expenditure-container">
+        <div id="highest-expenses" class="expenditure-container">
           <h1>Highest Expenditure</h1>
-          <div class="expenditure">
+          <!-- <div class="expenditure">
             <button class="expenditure-three-dots-btn">...</button>
             <h2 class="amount">Amount</h2>
             <p class="type">Type</p>
             <p class="description">Description</p>
             <p class="date">Date</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </main>
-    <script src="script.js"></script>
+    <script type="module">
+      import App from "./js/Expenses.js";
+
+      const app = new App();
+    </script>
   </body>
 </html>

@@ -121,16 +121,19 @@ body {
 }
 
 .expenditure-container{
-    width: 350px;
+    width: 100%;
 }
 
 .expenditure{
+    display: inline-block;
     padding: 10px 15px;
     background-color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     position: relative;
+    min-width: 250px;
+    margin: 12px;
 }
 
 .expenditure-three-dots-btn{
@@ -161,4 +164,8 @@ body {
     bottom: 10px;
     right: 10px;
     font-size: 12px;
+}
+
+.expense-list {
+    display: flex;
 }
