@@ -65,11 +65,28 @@
           </div> -->
         </div>
       </div>
+
+      <div class="add-item-popup" >
+        <div class="input-list">
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount">
+          <label for="type">Type:</label>
+          <input type="text" id="type">
+          <label for="description">Description:</label>
+          <input type="text" id="description">
+          <label for="date">Date:</label>
+          <input type="date" id="date">
+          <button type="submit">Submit</button>
+          <button id="close-popup-btn">Cancel</button>
+        </div>
+      </div>
+
     </main>
     <script type="module">
       import App from "./js/Expenses.js";
 
       const app = new App();
     </script>
+    <script src="./js/Add-expenditure-popup.js"></script> 
   </body>
 </html>
