@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Overview of Expenditure Tracking Website"
+    />
+    <meta name="viewport" content="width=device-width, intial-scale=1.0" />
+    <title>Home Page</title>
+
+    <link href="css/home_styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="navbar">
+      <p class="logo">Welcome, USER!</p>
+      <ul class="nav-list">
+        <li class="dropdown">
+          <a href="index.html" class="dropbtn">Account</a>
+          <ul class="dropdown-content">
+            <li><a href="settings.html" class="dropbtn">Settings</a></li>
+            <li><a href="index.html" class="dropbtn">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main class="wrapper">
+      <div class="expenditures-container">
+        <div id="recent-expenses" class="expenditure-container">
+          <h2>Profile</h2>
+          <h2>Privacy</h2>
+        </div>
+      </div>
+    </main>
+    <script type="module">
+      import App from "./js/Expenses.js";
+
+      const app = new App();
+    </script>
+  </body>
+</html>
