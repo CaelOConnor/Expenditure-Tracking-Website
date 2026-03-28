@@ -119,3 +119,17 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
+
+.form-error {
+    color: #6b1d1d;
+    background-color: #ef9595;
+    border: 1px solid #6b1d1d;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}

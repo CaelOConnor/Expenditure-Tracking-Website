@@ -10,6 +10,11 @@
     <title>Login Page</title>
 
     <link href="css/login_styles.css" rel="stylesheet" />
+    <script type="module">
+      import App from './js/login.js';
+
+      const app = new App();
+    </script>
   </head>
   <body>
     <header class="navbar">
@@ -22,16 +27,22 @@
     <main class="wrapper">
       <div class="container">
         <div class="form-box active" id="login-form">
-          <form action="">
+          <form id="login" action="">
             <h1>Login</h1>
-            <input type="email" name="email" placeholder="Email" required />
+            <input id="email" type="email" name="email" placeholder="Email" required />
             <input
+              id="password"
               type="password"
               name="password"
               placeholder="Password"
               required
             />
             <button type="submit" name="login">Login</button>
+
+            <div class="form-error hidden" id="error-message">
+              <p>Invalid Username or Password</p>
+            </div>
+
             <p>
               Don't have an account?
               <a href="#" onclick="showform('register-form')">Register</a>
