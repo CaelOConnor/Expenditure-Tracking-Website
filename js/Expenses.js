@@ -1,5 +1,5 @@
 class Expense {
-    constructor(parentElement){
+    constructor(parentElement, passedAmount, passedType, passedDescription, passedDate){
         // save parentElement to the object
         this.parentElement = parentElement;
 
@@ -16,25 +16,25 @@ class Expense {
         // amount
         const amount = document.createElement('h2');
         amount.classList.add("amount");
-        amount.textContent = "amount";
+        amount.textContent = passedAmount;
         this.div.appendChild(amount);
 
         // type
         const type = document.createElement('p');
         type.classList.add("type");
-        type.textContent = "type";
+        type.textContent = passedType;
         this.div.appendChild(type);
 
         // description
         const description = document.createElement('p');
         description.classList.add("description");
-        description.textContent = "description";
+        description.textContent = passedDescription;
         this.div.appendChild(description);
 
         // date
         const date = document.createElement('p');
         date.classList.add("date");
-        date.textContent = "date";
+        date.textContent = passedDate;
         this.div.appendChild(date);
         
 
@@ -53,15 +53,48 @@ class App {
         //this.classList.add("expense-list");
         this.container.appendChild(this.list);
         this.expenses = [];
-        this.addExpense = this.addExpense.bind(this);
+        this.submitExpense = this.submitExpense.bind(this);
 
-        document.querySelector("#add-expense").addEventListener("click", this.addExpense);
+        //document.querySelector("#add-expense").addEventListener("click", this.addExpense);
+        document.querySelector(".add-item-popup button[type='submit']").addEventListener("click", this.submitExpense);
+
+        this.loadExpenses();
     }
 
-    addExpense(){
-        const expense = new Expense(this.list);
-        this.expenses.push(expense);
+    async loadExpenses() {
+        const response = await fetch('data.json');
+        const users = await response.json();
+
+        for(const user of users){
+            for(const expense of user.expenses){
+                this.createExpense(expense.amount, expense.type, expense.description, expense.date);
+            }
+        }
     }
+
+    createExpense(amount, type, description, date) {
+        const expese = new Expense(
+            this.container, amount, type, description, date
+        );
+        this.expenses.push(expese);
+    }
+
+    submitExpense() {
+        const amount = document.querySelector("#amount").value;
+        const type = document.querySelector("#type").value;
+        const description = document.querySelector("#description").value;
+        const date = document.querySelector("#date").value;
+
+        if (!amount || !type || !description || !date){
+            alert("Please fill all information");
+            return;
+        }
+
+        this.createExpense(amount, type, description, date);
+
+        document.querySelector(".add-item-popup").style.display = "none";
+    }
+    
 
 }
 
