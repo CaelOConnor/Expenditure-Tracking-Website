@@ -46,13 +46,17 @@ class Expense {
 class App {
     constructor(){
         // set up a reference to the post container in the html
-        this.container = document.querySelector("#recent-expenses");
+        this.topContainer = document.querySelector("#recent-expenses");
+        this.bottomContainer = document.querySelector("#highest-expenses");
         // set up an array variable that will hold the posts 
         
-        this.list = document.createElement("div");
+        this.topList = document.createElement("div");
+        this.bottomList = document.createElement("div");
         //this.classList.add("expense-list");
-        this.container.appendChild(this.list);
-        this.expenses = [];
+        this.topContainer.appendChild(this.topList);
+        this.bottomContainer.appendChild(this.bottomList);
+        this.topExpenses = [];
+        this.bottomExpenses = [];
         this.submitExpense = this.submitExpense.bind(this);
 
         //document.querySelector("#add-expense").addEventListener("click", this.addExpense);
@@ -73,10 +77,14 @@ class App {
     }
 
     createExpense(amount, type, description, date) {
-        const expese = new Expense(
-            this.container, amount, type, description, date
+        const topExpense = new Expense(
+            this.topContainer, amount, type, description, date
         );
-        this.expenses.push(expese);
+        this.topExpenses.push(topExpense);
+        const bottomExpense = new Expense(
+            this.bottomContainer, amount, type, description, date
+        );
+        this.bottomExpenses.push(bottomExpense);
     }
 
     submitExpense() {
