@@ -37,7 +37,6 @@ class Expense {
         date.textContent = passedDate;
         this.div.appendChild(date);
         
-
         // add the div to the parent element
         this.parentElement.appendChild(this.div);
     }
@@ -47,14 +46,14 @@ class App {
     constructor(){
         // set up a reference to the post container in the html
         this.topContainer = document.querySelector("#recent-expenses");
-        this.bottomContainer = document.querySelector("#highest-expenses");
-        // set up an array variable that will hold the posts 
+        this.bottomContainer = document.querySelector("#highest-expenses"); 
         
         this.topList = document.createElement("div");
         this.bottomList = document.createElement("div");
         //this.classList.add("expense-list");
         this.topContainer.appendChild(this.topList);
         this.bottomContainer.appendChild(this.bottomList);
+        // set up an array variable that will hold the posts
         this.topExpenses = [];
         this.bottomExpenses = [];
         this.submitExpense = this.submitExpense.bind(this);

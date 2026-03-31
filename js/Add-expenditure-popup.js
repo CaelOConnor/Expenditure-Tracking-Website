@@ -1,12 +1,24 @@
-const addBtn = document.getElementById("add-expense");
-  const popup = document.querySelector(".add-item-popup");
+class Popup{
+    constructor(){
+        // load elements
+        this.addBtn = document.getElementById("add-expense");
+        this.closeBtn = document.getElementById("close-popup-btn");
+        this.popup = document.querySelector(".add-item-popup");
 
-  addBtn.addEventListener("click", () => {
-    popup.style.display = "block";
-  });
+        // make listeners
+        this.addBtn.addEventListener("click", () => this.openPopup());
+        this.closeBtn.addEventListener("click", () => this.closePopup());
+    }
 
-const closeBtn = document.getElementById("close-popup-btn");
+    // open popup
+    openPopup() {
+        this.popup.style.display = "block";
+    }
 
-closeBtn.addEventListener("click", () => {
-  popup.style.display = "none";
-});
+    // close popup
+    closePopup() {
+        this.popup.style.display = "none";
+    }
+}
+
+export default Popup;
