@@ -10,6 +10,11 @@
     <title>Home Page</title>
 
     <link href="css/home_styles.css" rel="stylesheet" />
+    <script type="module">
+      import App from "./js/Expenses.js";
+
+      const app = new App();
+    </script>
   </head>
   <body>
     <header class="navbar">
@@ -74,11 +79,6 @@
       </div>
 
     </main>
-    <script type="module">
-      import App from "./js/Expenses.js";
-
-      const app = new App();
-    </script>
     <script src="./js/Add-expenditure-popup.js"></script> 
   </body>
 </html>

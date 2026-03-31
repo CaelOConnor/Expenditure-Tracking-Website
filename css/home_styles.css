@@ -78,32 +78,6 @@ body {
     background: #d3e7b2;
     color: #333;
 }
-/* 
-.wrapper {
-    height: 100vh;
-    background: linear-gradient(to right, #d3e7b2, #315e3a);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
-
-.wrapper-content {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.wrapper h1 {
-    font-size: 3rem;
-    margin-bottom: 30px;
-}
-
-.wrapper p {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-} */
 
 .expenditure-buttons-container {
     display: flex;
@@ -161,14 +135,15 @@ body {
 
 .expenditure{
     display: inline-block;
-    padding: 10px 15px;
+    padding: 15px 15px 30px 15px;
     background-color: white;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
     position: relative;
     min-width: 250px;
+    max-width: 400px;
     margin: 12px;
+    justify-content: space-between;
 }
 
 .expenditure-three-dots-btn{
@@ -179,6 +154,7 @@ body {
     background: white;
     font-size: 20px;
     border: none;
+    cursor: pointer;
 }
 
 .amount{
@@ -192,6 +168,9 @@ body {
 
 .description {
     font-size: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .date {
@@ -203,6 +182,8 @@ body {
 
 .expense-list {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .add-item-popup {
