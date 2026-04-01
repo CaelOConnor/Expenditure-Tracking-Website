@@ -15,8 +15,7 @@ body {
     color: #333;
 }
 
-/* Nav bar */
-
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -32,6 +31,7 @@ body {
     margin-left: 20px;
 }
 .nav-list {
+    list-style-type: none;
     display: flex;
     flex-direction: row; 
     gap: 2vw;
@@ -51,38 +51,38 @@ body {
 
 
 /* drop down in top right for account */
-
 .dropdown {
     position: relative;
-    display: inline-block;
 }
 .dropbtn {
     cursor: pointer;
-    padding: 20px 20px;
+    padding: 0 20px;
     display: inline-block;
 }
 /* hidden dropdown stuff until hovering over it */
 .dropdown-content {
     display: none;
-    position:absolute;
+    position: absolute;
+    background-color: #27412c;
     left: 0;
-    background-color:  #27412c;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgb(0,0,0,0.2);
-    border-radius: 6px;
+    top: 100%;
+    min-width: 180px;
+    box-shadow: 0px 8px 18px 0px rgb(0, 0, 0, 0.2);
+    border-radius: 8px;
     overflow: hidden;
-    padding: 0;
+    padding: 6px 0;
+    z-index: 100;
 }
-.dropdown-content li a{
-    color: black;
-    padding: 12px 16px;
+.dropdown-content li a {
+    color: white;
+    padding: 20px 20px;
     text-decoration: none;
     display: block;
 }
-.dropdown-content li a:hover{
-    background-color: #f1f1f1;
+.dropdown-content li a:hover {
+    background-color: #3f6c48;
 }
-.dropdown:hover .dropdown-content{
+.dropdown:hover .dropdown-content {
     display: block;
 }
 

@@ -16,7 +16,6 @@ body {
 }
 
 /* Nav bar */
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -32,6 +31,7 @@ body {
     margin-left: 20px;
 }
 .nav-list {
+    list-style-type: none;
     display: flex;
     flex-direction: row; 
     gap: 2vw;

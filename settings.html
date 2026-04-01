@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, intial-scale=1.0" />
     <title>Home Page</title>
 
-    <link href="css/home_styles.css" rel="stylesheet" />
+    <link href="css/settings.css" rel="stylesheet" />
   </head>
   <body>
     <header class="navbar">
@@ -25,17 +25,25 @@
       </ul>
     </header>
     <main class="wrapper">
-      <div class="expenditures-container">
-        <div id="recent-expenses" class="expenditure-container">
-          <h2>Profile</h2>
-          <h2>Privacy</h2>
-        </div>
-      </div>
-    </main>
-    <script type="module">
-      import App from "./js/Expenses.js";
+        <div class="settings-container">
+            <h1>Settings</h1>
 
-      const app = new App();
-    </script>
+            <div class="settings-box">
+                <h2>Profile</h2>
+                <p>Update your username or change email and password</p>
+                <button class="btn">Profile Options</button>
+            </div>
+            <div class="settings-box">
+                <h2>Privacy</h2>
+                <p>Manage your personal data and account security</p>
+                <button class="btn">Privacy options</button>
+            </div>
+            <div class="settings-box">
+                <h2>Notification</h2>
+                <p>Stay stuned to all your expenses at any time</p>
+                <button class="btn">Notifications options</button>
+            </div>
+        </div>
+    </main>
   </body>
 </html>
