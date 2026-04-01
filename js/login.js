@@ -12,15 +12,15 @@ class App {
     async login(event){
         /* TODO: See Part 0 of README.md */
         event.preventDefault();
-
+        // make email and password variables
         const email = this.email.value;
         const password = this.password.value;
-
+        //get data
         const response = await fetch('data.json');
         const data = await response.json();
-
+        // look for user
         const user = data.filter(u => u.email === email); 
-
+        // check if password mathces
         if ( (user.length == 1) && (user[0].password === password) ) {
             window.location.href = "home.html";
         } else {

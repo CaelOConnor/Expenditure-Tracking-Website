@@ -58,16 +58,17 @@ class App {
         this.bottomExpenses = [];
         this.submitExpense = this.submitExpense.bind(this);
 
-        //document.querySelector("#add-expense").addEventListener("click", this.addExpense);
-        document.querySelector(".add-item-popup button[type='submit']").addEventListener("click", this.submitExpense);
+        document.querySelector("#popup-submit-btn").addEventListener("click", this.submitExpense);
 
         this.loadExpenses();
     }
 
     async loadExpenses() {
+        // get data
         const response = await fetch('data.json');
         const users = await response.json();
 
+        // loop over users and load create expenses 
         for(const user of users){
             for(const expense of user.expenses){
                 this.createExpense(expense.amount, expense.type, expense.description, expense.date);
@@ -76,10 +77,12 @@ class App {
     }
 
     createExpense(amount, type, description, date) {
+        // create expense for top row
         const topExpense = new Expense(
             this.topContainer, amount, type, description, date
         );
         this.topExpenses.push(topExpense);
+        // create expense for bottom row
         const bottomExpense = new Expense(
             this.bottomContainer, amount, type, description, date
         );
@@ -87,18 +90,20 @@ class App {
     }
 
     submitExpense() {
+        // get values
         const amount = document.querySelector("#amount").value;
         const type = document.querySelector("#type").value;
         const description = document.querySelector("#description").value;
         const date = document.querySelector("#date").value;
 
+        // make sure every field has info
         if (!amount || !type || !description || !date){
             alert("Please fill all information");
             return;
         }
-
+        //make expense
         this.createExpense(amount, type, description, date);
-
+        //hide popup
         document.querySelector(".add-item-popup").style.display = "none";
     }
     
