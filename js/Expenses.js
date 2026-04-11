@@ -3,6 +3,12 @@ class Expense {
         // save parentElement to the object
         this.parentElement = parentElement;
 
+        // store varaibles
+        this.amount = Number(passedAmount);
+        this.type = passedType;
+        this.description = passedDescription;
+        this.date = new Date(passedDate);
+
         // create the div as an instance variable, give it the class "post"
         this.div = document.createElement("div");
         this.div.classList.add("expenditure");
@@ -16,25 +22,25 @@ class Expense {
         // amount
         const amount = document.createElement('h2');
         amount.classList.add("amount");
-        amount.textContent = passedAmount;
+        amount.textContent = `$${this.amount}`;
         this.div.appendChild(amount);
 
         // type
         const type = document.createElement('p');
         type.classList.add("type");
-        type.textContent = passedType;
+        type.textContent = this.type;
         this.div.appendChild(type);
 
         // description
         const description = document.createElement('p');
         description.classList.add("description");
-        description.textContent = passedDescription;
+        description.textContent = this.description;
         this.div.appendChild(description);
 
         // date
         const date = document.createElement('p');
         date.classList.add("date");
-        date.textContent = passedDate;
+        date.textContent = this.date.toLocaleDateString(); // makes date readable
         this.div.appendChild(date);
         
         // add the div to the parent element
@@ -59,6 +65,16 @@ class App {
         this.submitExpense = this.submitExpense.bind(this);
 
         document.querySelector("#popup-submit-btn").addEventListener("click", this.submitExpense);
+
+        // sorting based on dropdown
+        this.sortDropdown = document.querySelector("#SortBy");
+        this.sortExpenses = this.sortExpenses.bind(this);
+        this.sortDropdown.addEventListener("change", this.sortExpenses);
+
+        // searching
+        this.searchInput = document.querySelector("#search");
+        this.searchExpenses = this.searchExpenses.bind(this);
+        this.searchInput.addEventListener("input", this.searchExpenses);
 
         this.loadExpenses();
     }
@@ -107,6 +123,62 @@ class App {
         document.querySelector(".add-item-popup").style.display = "none";
     }
     
+    renderExpenses(expenseArray, container){
+        // remove all expenses
+        for(const expense of expenseArray){
+            expense.div.remove();
+        }
+        // add expenses back
+        for(const expense of expenseArray){
+            container.appendChild(expense.div);
+        }
+    }
+
+    sortExpenses(){
+        const value = this.sortDropdown.value;
+
+        function sortComparator(expense1, expense2){ // a and b
+            if (value === "Most-Recent"){
+                return expense2.date - expense1.date;
+            } 
+            else if (value === "Oldest"){
+                return expense1.date - expense2.date;
+            }
+            else if (value === "Highest-Expenditure"){
+                return expense2.amount - expense1.amount; 
+            }
+            else if (value === "Lowest-Expenditure"){
+                return expense1.amount - expense2.amount; 
+            }
+        }
+        // sort
+        this.topExpenses.sort(sortComparator);
+        this.bottomExpenses.sort(sortComparator);
+        // re-render
+        this.renderExpenses(this.topExpenses, this.topContainer);
+        this.renderExpenses(this.bottomExpenses, this.bottomContainer);
+    }
+
+    searchExpenses(){
+        const search = this.searchInput.value.toLowerCase();
+
+        const top = this.topExpenses.filter(expense =>
+            expense.amount.toString().includes(search) ||
+            expense.type.toLowerCase().includes(search) ||
+            expense.description.toLowerCase().includes(search) ||
+            expense.date.toLocaleDateString().includes(search) 
+        );
+
+        const bottom = this.bottomExpenses.filter(expense =>
+            expense.amount.toString().includes(search) ||
+            expense.type.toLowerCase().includes(search) ||
+            expense.description.toLowerCase().includes(search) ||
+            expense.date.toLocaleDateString().includes(search)
+        );
+
+        this.renderExpenses(top, this.topContainer);
+        this.renderExpenses(bottom, this.bottomContainer);
+    }
 
 }
 
