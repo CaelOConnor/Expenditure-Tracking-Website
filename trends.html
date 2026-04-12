@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trends</title>
     <link href="css/trends.css" rel="stylesheet" />
+    <script type="module">
+      import App from "./js/trends.js";
+
+      const app = new App();
+    </script>
   </head>
   <body>
     <body>
@@ -31,6 +36,9 @@
           </ul>
         </nav>
       </div>
+      <div id="lineChart"></div>
+      <div id="pieChart"></div>
+      <div id="barChart"></div>
     </main>
   </body>
 </html>
