@@ -122,12 +122,15 @@ class App {
         //hide popup
         document.querySelector(".add-item-popup").style.display = "none";
     }
-    
-    renderExpenses(expenseArray, container){
+
+    clearExpenses(expenseArray){
         // remove all expenses
         for(const expense of expenseArray){
             expense.div.remove();
         }
+    }
+    
+    renderExpenses(expenseArray, container){
         // add expenses back
         for(const expense of expenseArray){
             container.appendChild(expense.div);
@@ -155,28 +158,32 @@ class App {
         this.topExpenses.sort(sortComparator);
         this.bottomExpenses.sort(sortComparator);
         // re-render
+        this.clearExpenses(this.topExpenses);
         this.renderExpenses(this.topExpenses, this.topContainer);
+        this.clearExpenses(this.bottomExpenses);
         this.renderExpenses(this.bottomExpenses, this.bottomContainer);
     }
 
     searchExpenses(){
         const search = this.searchInput.value.toLowerCase();
-
+        //filter for top
         const top = this.topExpenses.filter(expense =>
             expense.amount.toString().includes(search) ||
             expense.type.toLowerCase().includes(search) ||
             expense.description.toLowerCase().includes(search) ||
             expense.date.toLocaleDateString().includes(search) 
         );
-
+        // filter for bottom
         const bottom = this.bottomExpenses.filter(expense =>
             expense.amount.toString().includes(search) ||
             expense.type.toLowerCase().includes(search) ||
             expense.description.toLowerCase().includes(search) ||
             expense.date.toLocaleDateString().includes(search)
         );
-
+        //render
+        this.clearExpenses(this.topExpenses);
         this.renderExpenses(top, this.topContainer);
+        this.clearExpenses(this.bottomExpenses);
         this.renderExpenses(bottom, this.bottomContainer);
     }
 
