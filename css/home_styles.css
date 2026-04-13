@@ -204,6 +204,10 @@ body {
     gap: 10px;
 }
 
-.li{
+.input-list select{
+    width: 100%;
+}
+
+.input-list input{
     width: 100%;
 }
