@@ -203,3 +203,7 @@ body {
     flex-direction: column;
     gap: 10px;
 }
+
+.li{
+    width: 100%;
+}

@@ -10,6 +10,10 @@ class App {
 
     getCategoryData(expenses){
         // get amount spent for each category and return the data for chart
+        // dictionary = {};
+        // for(const expense of expenses){
+        //     if expense.type no
+        // }
     }
 
     getTopExpenses(expenses){

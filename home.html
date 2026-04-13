@@ -69,8 +69,19 @@
         <div class="input-list">
           <label for="amount">Amount:</label>
           <input type="number" id="amount">
-          <label for="type">Type:</label>
-          <input type="text" id="type">
+          <li>
+              <!-- <label for="type">Type:</label> -->
+              <select id="type-selector" name="Type">
+                <option value="" disabled selected hidden>Type</option>
+                <option value="food">Food</option>
+                <option value="bills">Bills</option>
+                <option value="housing">Housing</option>
+                <option value="health">Health</option>
+                <option value="transportation">Transportation</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="miscellaneous">Miscellaneous</option>
+              </select>
+          </li>
           <label for="description">Description:</label>
           <input type="text" id="description">
           <label for="date">Date:</label>
