@@ -17,7 +17,7 @@ class App {
   // get data for charts
   getMonthySpending(expenses) {
     // get monthly spending from past year and return the data for chart
-    dictionary = {};
+    const dictionary = {};
     for (const expense of expenses) {
       const month = expense.date; // update this later because of format issues
       // if that type isnt in dictionary add it and its amount
@@ -33,7 +33,7 @@ class App {
 
   getCategoryData(expenses) {
     // get amount spent for each category and return the data for chart
-    dictionary = {};
+    const dictionary = {};
     for (const expense of expenses) {
       const type = expense.type;
       // if that type isnt in dictionary add it and its amount
@@ -50,7 +50,7 @@ class App {
   getTopExpenses(expenses) {
     // get top 10 expenses and return data for the chart
     // const sorted = expenses.sort(); // change to sort by amount
-    const sorted = expenses.sort((a, b) >= a.amount - b.amount);
+    const sorted = expenses.sort((a, b) => a.amount - b.amount);
     // cosnt top10 = ;
     const top10 = sorted.slice(0, 10);
     // return
@@ -68,6 +68,23 @@ class App {
 
   renderBarChart(data) {
     // bar chart of highest expenses
+    const spec = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      title: "Top 10 Expenses",
+      data: { values: data },
+      width: 400,
+      height: 400,
+      mark: { type: "bar" },
+      encoding: {
+        x: {
+          field: "description",
+          type: "ordinal",
+          sort: { field: "amount", order: "descending" },
+        },
+        y: { field: "amount", type: "quantitative" },
+      },
+    };
+    vegaEmbed("#barChart", spec);
   }
 }
 

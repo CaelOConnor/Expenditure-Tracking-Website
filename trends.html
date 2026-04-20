@@ -11,8 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
     <script type="module">
       import App from "./js/trends.js";
-
-      const app = new App();
+      fetch('./data.json')
+      .then(response => response.json())
+      .then(users => {
+        const expenses = users.flatMap(user => user.expenses);
+        new App(expenses);
+  });
     </script>
   </head>
   <body>
@@ -29,7 +33,7 @@
         </li>
       </ul>
     </header>
-     <main class="wrapper">
+    <main class="wrapper">
       <div class="trends-buttons-container">
         <nav class="home-buttons">
           <ul class="nav-list">
