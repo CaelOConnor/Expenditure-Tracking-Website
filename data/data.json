@@ -1,7 +1,6 @@
-[
-  {
+{
+  "arthur@gmail.com":{
     "name": "Arthur",
-    "email": "arthur@gmail.com",
     "password": "Arthurpassword",
     "expenses": [
       {
@@ -12,9 +11,9 @@
       }
     ]
   },
-  {
+
+  "cael@gmail.com":{
     "name": "Cael",
-    "email": "cael@gmail.com",
     "password": "Caelpassword",
     "expenses": [
       {
@@ -31,7 +30,8 @@
       }
     ]
   },
-  {
+
+  "emilio@gmail.com":{
     "name": "Emilio",
     "email": "emilio@gmail.com",
     "password": "Emiliopassword",
@@ -56,4 +56,4 @@
       }
     ]
   }
-]
+}
