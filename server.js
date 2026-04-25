@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import data from './data.json' with {type: "json"};
+import data from './data/data.json' with {type: "json"};
 
 const app = express();
 
@@ -9,21 +9,17 @@ app.use(express.static('public'));
 
 // when user logs in
 app.post('/login', function(req, res){
-    // hard coded user based on feedback
-    const user = data["arthur@gmail.com"];
-    // push data
-    user.push(req.body);
+    // get email and password from request
+    const {email, password} = req.body;
+    // get user
+    const user = data[email];
 
-    // save to file
-    fs.writeFile(
-        './data.json',
-        JSON.stringify(posts),
-        'utf-8',
-        function(err) {
-            if(err) console.log(err);
-            else console.log("Data Written successfully");
-    });
-    
+    // check if user exits and password matches
+    if (user && user.password === password){
+        res.json({success: true});
+    } else {
+        res.json({success: false});
+    }  
 });
 
 // when user make new account

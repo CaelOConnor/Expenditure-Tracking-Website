@@ -81,14 +81,12 @@ class App {
 
     async loadExpenses() {
         // get data
-        const response = await fetch('data.json');
-        const users = await response.json();
+        const response = await fetch('/expenses');
+        const expenses = await response.json();
 
-        // loop over users and load create expenses 
-        for(const user of users){
-            for(const expense of user.expenses){
-                this.createExpense(expense.amount, expense.type, expense.description, expense.date);
-            }
+        // loop over expenses for the user and create expenses
+        for(const expense of expenses){
+            this.createExpense(expense.amount, expense.type, expense.description, expense.date);
         }
     }
 
