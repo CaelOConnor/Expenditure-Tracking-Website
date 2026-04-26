@@ -47,7 +47,7 @@ app.post('/register', function(req, res){
                 console.log(err);
                 return res.json({success: false});
             }
-            res.json({success: true})
+            res.json({success: true});
         });
 });
 
@@ -60,20 +60,28 @@ app.get('/expenses', function(req, res){
 });
 
 // createing a new expense on home page
-app.post('/expense', function(req, res){
+app.post('/createExpense', function(req, res){
     // hard coded user based on feedback
     const user = data["arthur@gmail.com"];
-    // push data
-    user.push(req.body);
+    // get new expense
+    const new_expense = req.body;
+    // add to users expense array
+    user.expenses.push(new_expense);
 
     // save to file
     fs.writeFile(
         './data/data.json',
-        JSON.stringify(posts),
+        JSON.stringify(data),
         'utf-8',
         function(err) {
-            if(err) console.log(err);
-            else console.log("Data Written successfully");
+            if(err) {
+                console.log(err);
+                res.json({success: false});
+            }
+            else{
+                console.log("Data Written successfully");
+                res.json({success: true});
+            } 
     });
 });
 

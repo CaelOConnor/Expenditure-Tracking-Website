@@ -103,10 +103,10 @@ class App {
         this.bottomExpenses.push(bottomExpense);
     }
 
-    submitExpense() {
+    async submitExpense() {
         // get values
         const amount = document.querySelector("#amount").value;
-        const type = document.querySelector("#type").value;
+        const type = document.querySelector("#type-selector").value;
         const description = document.querySelector("#description").value;
         const date = document.querySelector("#date").value;
 
@@ -115,10 +115,28 @@ class App {
             alert("Please fill all information");
             return;
         }
-        //make expense
-        this.createExpense(amount, type, description, date);
-        //hide popup
-        document.querySelector(".add-item-popup").style.display = "none";
+
+        // make expense
+        const newExpense = {amount, type, description, date};
+        // send to server
+        const response = await fetch('/createExpense', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newExpense)
+        });
+
+        const result = await response.json();
+
+        // if saved then update frontend otherwise alert the error
+        if (result.success) {
+            //make expense
+            this.createExpense(amount, type, description, date);
+            //hide popup
+            document.querySelector(".add-item-popup").style.display = "none";
+        } else {
+            alert("Error sending expense to server");
+        }
+
     }
 
     clearExpenses(expenseArray){
