@@ -24,21 +24,31 @@ app.post('/login', function(req, res){
 
 // when user make new account
 app.post('/register', function(req, res){
-    // hard coded user based on feedback
-    const user = data["arthur@gmail.com"];
-    // push data
-    user.push(req.body);
-
+    // get data from request body 
+    const {name, email, password} = req.body;
+    // check if email already exists
+    if (data[email]) {
+        return res.json({success: false});
+    }
+    // create new user
+    data[email] = {
+        name: name,
+        email: email,
+        password: password,
+        expenses: []
+    };
     // save to file
     fs.writeFile(
-        './data.json',
-        JSON.stringify(posts),
+        './data/data.json',
+        JSON.stringify(data),
         'utf-8',
         function(err) {
-            if(err) console.log(err);
-            else console.log("Data Written successfully");
-    });
-    
+            if(err) {
+                console.log(err);
+                return res.json({success: false});
+            }
+            res.json({success: true})
+        });
 });
 
 // get expenses for home page
@@ -58,7 +68,7 @@ app.post('/expense', function(req, res){
 
     // save to file
     fs.writeFile(
-        './data.json',
+        './data/data.json',
         JSON.stringify(posts),
         'utf-8',
         function(err) {
@@ -84,7 +94,7 @@ app.post('/limit', function(req, res){
 
     // save to file
     fs.writeFile(
-        './data.json',
+        './data/data.json',
         JSON.stringify(posts),
         'utf-8',
         function(err) {
