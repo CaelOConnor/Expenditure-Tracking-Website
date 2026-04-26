@@ -85,6 +85,59 @@ app.post('/createExpense', function(req, res){
     });
 });
 
+
+// delete expenses
+// app.post('/deleteExpense', function(req, res){
+//     // hard coded user based on feedback
+//     const user = data["arthur@gmail.com"];
+//     // get new expense
+//     const new_expense = req.body;
+//     // add to users expense array
+//     user.expenses.push(new_expense);
+
+//     // save to file
+//     fs.writeFile(
+//         './data/data.json',
+//         JSON.stringify(data),
+//         'utf-8',
+//         function(err) {
+//             if(err) {
+//                 console.log(err);
+//                 res.json({success: false});
+//             }
+//             else{
+//                 console.log("Data Written successfully");
+//                 res.json({success: true});
+//             } 
+//     });
+// });
+
+// // edit expense
+// app.post('/editExpense', function(req, res){
+//     // hard coded user based on feedback
+//     const user = data["arthur@gmail.com"];
+//     // get new expense
+//     const new_expense = req.body;
+//     // add to users expense array
+//     user.expenses.push(new_expense);
+
+//     // save to file
+//     fs.writeFile(
+//         './data/data.json',
+//         JSON.stringify(data),
+//         'utf-8',
+//         function(err) {
+//             if(err) {
+//                 console.log(err);
+//                 res.json({success: false});
+//             }
+//             else{
+//                 console.log("Data Written successfully");
+//                 res.json({success: true});
+//             } 
+//     });
+// });
+
 // getting user limits
 app.get('/limit', function(req, res){
     // hard coded user

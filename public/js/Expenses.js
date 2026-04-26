@@ -13,11 +13,17 @@ class Expense {
         this.div = document.createElement("div");
         this.div.classList.add("expenditure");
 
-        // create three dots button
-        const btn = document.createElement("button");
-        btn.classList.add("expenditure-three-dots-btn");
-        btn.textContent = "...";
-        this.div.appendChild(btn);
+        // edit
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("expenditure-edit-btn");
+        editBtn.textContent = "Edit";
+        this.div.appendChild(editBtn);
+
+        // delete
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("expenditure-delete-btn");
+        deleteBtn.textContent = "Delete";
+        this.div.appendChild(deleteBtn);
 
         // amount
         const amount = document.createElement('h2');
@@ -202,6 +208,62 @@ class App {
         this.clearExpenses(this.bottomExpenses);
         this.renderExpenses(bottom, this.bottomContainer);
     }
+
+    // async deleteExpense(expense) {
+    //     // send to server
+    //     const response = await fetch('/deleteExpense', {
+    //         method: "POST",
+    //         headers: {"Content-Type": "application/json"},
+    //         body: JSON.stringify({
+    //             amount: expense.amount,
+    //             type: expense.type,
+    //             description: expense.description,
+    //             date: expense.date.toLocaleDateString()
+    //         })
+    //     });
+
+    //     const result = await response.json();
+
+    //     // if saved then update frontend otherwise alert the error
+    //     if (result.success) {
+    //         // remove from top and bottom arrays
+    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
+    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
+    //     } else {
+    //         alert("Error deleting expense in server");
+    //     }
+    // }
+
+
+    // async editExpense(expense, newData) {
+    //     // send to server
+    //     const response = await fetch('/editExpense', {
+    //         method: "POST",
+    //         headers: {"Content-Type": "application/json"},
+    //         body: JSON.stringify({
+    //             Originalamount: expense.amount,
+    //             Originaltype: expense.type,
+    //             Originaldescription: expense.description,
+    //             Originaldate: expense.date.toLocaleDateString(),
+
+    //             newamount: newData.amount,
+    //             newtype: newData.type,
+    //             newadescription: newData.description,
+    //             newadate: newData.date.toLocaleDateString(),
+    //         })
+    //     });
+
+    //     const result = await response.json();
+
+    //     // if saved then update frontend otherwise alert the error
+    //     if (result.success) {
+    //         // remove from top and bottom arrays
+    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
+    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
+    //     } else {
+    //         alert("Error editing expense in server");
+    //     }
+    // }
 
 }
 
