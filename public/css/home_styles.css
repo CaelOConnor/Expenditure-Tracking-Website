@@ -211,3 +211,28 @@ body {
 .input-list input{
     width: 100%;
 }
+
+
+/* edit and delte buttons instead of three dots */
+
+.expenditure-edit-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #333;
+    background: white;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.expenditure-delete-btn{
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    color: #333;
+    background: white;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}

@@ -19,11 +19,17 @@ class Expense {
     this.div = document.createElement("div");
     this.div.classList.add("expenditure");
 
-    // create three dots button
-    const btn = document.createElement("button");
-    btn.classList.add("expenditure-three-dots-btn");
-    btn.textContent = "...";
-    this.div.appendChild(btn);
+        // edit
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("expenditure-edit-btn");
+        editBtn.textContent = "Edit";
+        this.div.appendChild(editBtn);
+
+        // delete
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("expenditure-delete-btn");
+        deleteBtn.textContent = "Delete";
+        this.div.appendChild(deleteBtn);
 
     // amount
     const amount = document.createElement("h2");
@@ -105,38 +111,40 @@ class App {
     }
   }
 
-  createExpense(amount, type, description, date) {
-    // create expense for top row
-    const topExpense = new Expense(
-      this.topContainer,
-      amount,
-      type,
-      description,
-      date,
-    );
-    this.topExpenses.push(topExpense);
-    // create expense for bottom row
-    const bottomExpense = new Expense(
-      this.bottomContainer,
-      amount,
-      type,
-      description,
-      date,
-    );
-    this.bottomExpenses.push(bottomExpense);
-  }
+    async submitExpense() {
+        // get values
+        const amount = document.querySelector("#amount").value;
+        const type = document.querySelector("#type-selector").value;
+        const description = document.querySelector("#description").value;
+        const date = document.querySelector("#date").value;
 
-  submitExpense() {
-    // get values
-    const amount = document.querySelector("#amount").value;
-    const type = document.querySelector("#type-selector").value;
-    const description = document.querySelector("#description").value;
-    const date = document.querySelector("#date").value;
+        // make sure every field has info
+        if (!amount || !type || !description || !date){
+            alert("Please fill all information");
+            return;
+        }
 
-    // make sure every field has info
-    if (!amount || !type || !description || !date) {
-      alert("Please fill all information");
-      return;
+        // make expense
+        const newExpense = {amount, type, description, date};
+        // send to server
+        const response = await fetch('/createExpense', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newExpense)
+        });
+
+        const result = await response.json();
+
+        // if saved then update frontend otherwise alert the error
+        if (result.success) {
+            //make expense
+            this.createExpense(amount, type, description, date);
+            //hide popup
+            document.querySelector(".add-item-popup").style.display = "none";
+        } else {
+            alert("Error sending expense to server");
+        }
+
     }
     //make expense
     this.createExpense(amount, type, description, date);
@@ -183,30 +191,62 @@ class App {
     this.renderExpenses(this.bottomExpenses, this.bottomContainer);
   }
 
-  searchExpenses() {
-    const search = this.searchInput.value.toLowerCase();
-    //filter for top
-    const top = this.topExpenses.filter(
-      (expense) =>
-        expense.amount.toString().includes(search) ||
-        expense.type.toLowerCase().includes(search) ||
-        expense.description.toLowerCase().includes(search) ||
-        expense.date.toLocaleDateString().includes(search),
-    );
-    // filter for bottom
-    const bottom = this.bottomExpenses.filter(
-      (expense) =>
-        expense.amount.toString().includes(search) ||
-        expense.type.toLowerCase().includes(search) ||
-        expense.description.toLowerCase().includes(search) ||
-        expense.date.toLocaleDateString().includes(search),
-    );
-    //render
-    this.clearExpenses(this.topExpenses);
-    this.renderExpenses(top, this.topContainer);
-    this.clearExpenses(this.bottomExpenses);
-    this.renderExpenses(bottom, this.bottomContainer);
-  }
+    // async deleteExpense(expense) {
+    //     // send to server
+    //     const response = await fetch('/deleteExpense', {
+    //         method: "POST",
+    //         headers: {"Content-Type": "application/json"},
+    //         body: JSON.stringify({
+    //             amount: expense.amount,
+    //             type: expense.type,
+    //             description: expense.description,
+    //             date: expense.date.toLocaleDateString()
+    //         })
+    //     });
+
+    //     const result = await response.json();
+
+    //     // if saved then update frontend otherwise alert the error
+    //     if (result.success) {
+    //         // remove from top and bottom arrays
+    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
+    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
+    //     } else {
+    //         alert("Error deleting expense in server");
+    //     }
+    // }
+
+
+    // async editExpense(expense, newData) {
+    //     // send to server
+    //     const response = await fetch('/editExpense', {
+    //         method: "POST",
+    //         headers: {"Content-Type": "application/json"},
+    //         body: JSON.stringify({
+    //             Originalamount: expense.amount,
+    //             Originaltype: expense.type,
+    //             Originaldescription: expense.description,
+    //             Originaldate: expense.date.toLocaleDateString(),
+
+    //             newamount: newData.amount,
+    //             newtype: newData.type,
+    //             newadescription: newData.description,
+    //             newadate: newData.date.toLocaleDateString(),
+    //         })
+    //     });
+
+    //     const result = await response.json();
+
+    //     // if saved then update frontend otherwise alert the error
+    //     if (result.success) {
+    //         // remove from top and bottom arrays
+    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
+    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
+    //     } else {
+    //         alert("Error editing expense in server");
+    //     }
+    // }
+
 }
 
 export default App;

@@ -24,21 +24,31 @@ app.post('/login', function(req, res){
 
 // when user make new account
 app.post('/register', function(req, res){
-    // hard coded user based on feedback
-    const user = data["arthur@gmail.com"];
-    // push data
-    user.push(req.body);
-
+    // get data from request body 
+    const {name, email, password} = req.body;
+    // check if email already exists
+    if (data[email]) {
+        return res.json({success: false});
+    }
+    // create new user
+    data[email] = {
+        name: name,
+        email: email,
+        password: password,
+        expenses: []
+    };
     // save to file
     fs.writeFile(
-        './data.json',
-        JSON.stringify(posts),
+        './data/data.json',
+        JSON.stringify(data),
         'utf-8',
         function(err) {
-            if(err) console.log(err);
-            else console.log("Data Written successfully");
-    });
-    
+            if(err) {
+                console.log(err);
+                return res.json({success: false});
+            }
+            res.json({success: true});
+        });
 });
 
 // get expenses for home page
@@ -50,22 +60,83 @@ app.get('/expenses', function(req, res){
 });
 
 // createing a new expense on home page
-app.post('/expense', function(req, res){
+app.post('/createExpense', function(req, res){
     // hard coded user based on feedback
     const user = data["arthur@gmail.com"];
-    // push data
-    user.push(req.body);
+    // get new expense
+    const new_expense = req.body;
+    // add to users expense array
+    user.expenses.push(new_expense);
 
     // save to file
     fs.writeFile(
-        './data.json',
-        JSON.stringify(posts),
+        './data/data.json',
+        JSON.stringify(data),
         'utf-8',
         function(err) {
-            if(err) console.log(err);
-            else console.log("Data Written successfully");
+            if(err) {
+                console.log(err);
+                res.json({success: false});
+            }
+            else{
+                console.log("Data Written successfully");
+                res.json({success: true});
+            } 
     });
 });
+
+
+// delete expenses
+// app.post('/deleteExpense', function(req, res){
+//     // hard coded user based on feedback
+//     const user = data["arthur@gmail.com"];
+//     // get new expense
+//     const new_expense = req.body;
+//     // add to users expense array
+//     user.expenses.push(new_expense);
+
+//     // save to file
+//     fs.writeFile(
+//         './data/data.json',
+//         JSON.stringify(data),
+//         'utf-8',
+//         function(err) {
+//             if(err) {
+//                 console.log(err);
+//                 res.json({success: false});
+//             }
+//             else{
+//                 console.log("Data Written successfully");
+//                 res.json({success: true});
+//             } 
+//     });
+// });
+
+// // edit expense
+// app.post('/editExpense', function(req, res){
+//     // hard coded user based on feedback
+//     const user = data["arthur@gmail.com"];
+//     // get new expense
+//     const new_expense = req.body;
+//     // add to users expense array
+//     user.expenses.push(new_expense);
+
+//     // save to file
+//     fs.writeFile(
+//         './data/data.json',
+//         JSON.stringify(data),
+//         'utf-8',
+//         function(err) {
+//             if(err) {
+//                 console.log(err);
+//                 res.json({success: false});
+//             }
+//             else{
+//                 console.log("Data Written successfully");
+//                 res.json({success: true});
+//             } 
+//     });
+// });
 
 // getting user limits
 app.get('/limit', function(req, res){
@@ -84,7 +155,7 @@ app.post('/limit', function(req, res){
 
     // save to file
     fs.writeFile(
-        './data.json',
+        './data/data.json',
         JSON.stringify(posts),
         'utf-8',
         function(err) {

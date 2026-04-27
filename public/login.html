@@ -12,8 +12,10 @@
     <link href="css/login_styles.css" rel="stylesheet" />
     <script type="module">
       import App from './js/login.js';
+      import RegisterApp from './js/register.js';
 
       const app = new App();
+      const registerApp = new RegisterApp();
     </script>
   </head>
   <body>
@@ -51,10 +53,12 @@
         </div>
 
         <div class="form-box" id="register-form">
-          <form action="">
+          <form action="" id="registration-form">
             <h1>Register</h1>
-            <input type="email" name="email" placeholder="Email" required />
+            <input id="register-name" type="text" name="name" placeholder="Name" required />
+            <input id="register-email" type="email" name="email" placeholder="Email" required />
             <input
+              id="register-password"
               type="password"
               name="password"
               placeholder="Password"
@@ -69,6 +73,6 @@
         </div>
       </div>
     </main>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
