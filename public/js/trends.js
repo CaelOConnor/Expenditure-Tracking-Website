@@ -1,13 +1,18 @@
 class App {
-  constructor(expenses) {
-    // get expenses
-    this.expenses = expenses;
+  constructor() {
+    // call setup fuction
+    this.setup();
+  }
 
+  async setup(){
+    // get data
+    const response = await fetch('/expenses');
+    this.expenses = await response.json();
+    console.log(this.expenses);
     // get data
     const lineChartData = this.getMonthySpending(this.expenses);
     const pieChartData = this.getCategoryData(this.expenses);
     const barChartData = this.getTopExpenses(this.expenses);
-
     // render charts
     this.renderLineChart(lineChartData);
     this.renderPieChart(pieChartData);
@@ -19,7 +24,7 @@ class App {
     // get monthly spending from past year and return the data for chart
     const dictionary = {};
     for (const expense of expenses) {
-      const month = expense.date; // update this later because of format issues
+      const month = expense.date.split("/")[0];
       // if that type isnt in dictionary add it and its amount
       if (!dictionary[month]) {
         dictionary[month] = expense.amount;
@@ -28,7 +33,11 @@ class App {
         dictionary[month] += expense.amount;
       }
     }
-    return dictionary;
+    // convert dictionary into an array for vega then return it
+    return Object.keys(dictionary).map(month => ({
+        month: month,
+        amount: dictionary[month]
+    }));
   }
 
   getCategoryData(expenses) {
@@ -44,7 +53,11 @@ class App {
         dictionary[type] += expense.amount;
       }
     }
-    return dictionary;
+    // turn into array for vega and return it 
+    return Object.keys(dictionary).map(type => ({
+        catagory: type,
+        amount: dictionary[type]
+    }));
   }
 
   getTopExpenses(expenses) {
@@ -60,10 +73,29 @@ class App {
   // render charts with vegalite
   renderLineChart(data) {
     // year to date spending line grpah
+    const spec = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      title: "Monty Spending",
+      data: { values: data },
+      width: 400,
+      height: 400,
+      mark: { type: "line" },
+      encoding: {
+        x: {
+          field: "month",
+          type: "ordinal",
+          title: "Month"
+        },
+        y: { field: "amount", type: "quantitative" },
+        titel: "Amount"
+      },
+    };
+    vegaEmbed("#lineChart", spec);
   }
 
   renderPieChart(data) {
     // pie chart of spending in different categorires
+    
   }
 
   renderBarChart(data) {
@@ -80,8 +112,10 @@ class App {
           field: "description",
           type: "ordinal",
           sort: { field: "amount", order: "descending" },
+          title: "Expenses"
         },
         y: { field: "amount", type: "quantitative" },
+        title: "Amount"
       },
     };
     vegaEmbed("#barChart", spec);

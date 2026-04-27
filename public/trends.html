@@ -11,16 +11,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
     <script type="module">
       import App from "./js/trends.js";
-      fetch('./data.json')
-      .then(response => response.json())
-      .then(users => {
-        const expenses = users.flatMap(user => user.expenses);
-        new App(expenses);
-  });
+      const app = new App();
     </script>
   </head>
   <body>
-    <body>
     <header class="navbar">
       <p class="logo">Welcome, USER!</p>
       <ul class="nav-list">
