@@ -19,7 +19,7 @@ class App {
     // look for user
     const user = data[email];
     // check if password mathces
-    if (user.length == 1 && user.password === password) {
+    if (user && user.password === password) {
       window.location.href = "home.html";
     } else {
       this.errorDiv.classList.remove("hidden");
