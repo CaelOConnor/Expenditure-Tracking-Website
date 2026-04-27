@@ -10,6 +10,17 @@
     <title>Home Page</title>
 
     <link href="css/settings.css" rel="stylesheet" />
+    <script type="module">
+      import BudgetManager from "./js/budget.js";
+      
+      const newBudget = new BudgetManager();
+      //connects the button to save budget
+      document.querySelector("#saveBudgetBtn").addEventListener("click", () => {
+        newBudget.saveBudget();
+      });
+      //loads existing budget
+      newBudget.displayBudget();
+    </script>
   </head>
   <body>
     <header class="navbar">
@@ -27,21 +38,11 @@
     <main class="wrapper">
         <div class="settings-container">
             <h1>Settings</h1>
-
             <div class="settings-box">
-                <h2>Profile</h2>
-                <p>Update your username or change email and password</p>
-                <button class="btn">Profile Options</button>
-            </div>
-            <div class="settings-box">
-                <h2>Privacy</h2>
-                <p>Manage your personal data and account security</p>
-                <button class="btn">Privacy options</button>
-            </div>
-            <div class="settings-box">
-                <h2>Notification</h2>
-                <p>Stay stuned to all your expenses at any time</p>
-                <button class="btn">Notifications options</button>
+              <h2>Set Budget Limit</h2>
+              <p>Set a montly spending limit</p>
+              <input type="number" id="budgetInput" placeholder="Enter budget" />
+              <button class="btn" id="saveBudgetBtn">Save Budget</button>
             </div>
         </div>
     </main>
