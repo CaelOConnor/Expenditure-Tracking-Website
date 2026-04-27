@@ -4,9 +4,9 @@ class App {
     this.setup();
   }
 
-  async setup(){
+  async setup() {
     // get data
-    const response = await fetch('/expenses');
+    const response = await fetch("/expenses");
     this.expenses = await response.json();
     console.log(this.expenses);
     // get data
@@ -34,9 +34,9 @@ class App {
       }
     }
     // convert dictionary into an array for vega then return it
-    return Object.keys(dictionary).map(month => ({
-        month: month,
-        amount: dictionary[month]
+    return Object.keys(dictionary).map((month) => ({
+      month: month,
+      amount: dictionary[month],
     }));
   }
 
@@ -53,10 +53,10 @@ class App {
         dictionary[type] += expense.amount;
       }
     }
-    // turn into array for vega and return it 
-    return Object.keys(dictionary).map(type => ({
-        category: type,
-        amount: dictionary[type]
+    // turn into array for vega and return it
+    return Object.keys(dictionary).map((type) => ({
+      category: type,
+      amount: dictionary[type],
     }));
   }
 
@@ -75,7 +75,7 @@ class App {
     // year to date spending line grpah
     const spec = {
       $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      title: "Monty Spending",
+      title: "YTD",
       data: { values: data },
       width: 400,
       height: 400,
@@ -84,12 +84,12 @@ class App {
         x: {
           field: "month",
           type: "ordinal",
-          title: "Month"
+          title: "Month",
         },
-        y: { 
-          field: "amount", 
+        y: {
+          field: "amount",
           type: "quantitative",
-          title: "Amount"
+          title: "Amount",
         },
       },
     };
@@ -98,7 +98,19 @@ class App {
 
   renderPieChart(data) {
     // pie chart of spending in different categorires
-    
+    const spec = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      title: "Categorical Spending",
+      data: { values: data },
+      width: 400,
+      height: 400,
+      mark: { type: "arc" },
+      encoding: {
+        theta: { field: "amount", type: "quantitative" },
+        color: { field: "type", type: "nominal" },
+      },
+    };
+    vegaEmbed("#pieChart", spec);
   }
 
   renderBarChart(data) {
@@ -115,12 +127,12 @@ class App {
           field: "description",
           type: "ordinal",
           sort: { field: "amount", order: "descending" },
-          title: "Expenses"
+          title: "Expenses",
         },
-        y: { 
-          field: "amount", 
+        y: {
+          field: "amount",
           type: "quantitative",
-          title: "Amount"
+          title: "Amount",
         },
       },
     };
