@@ -1,5 +1,5 @@
 {
-  "arthur@gmail.com":{
+  "arthur@gmail.com": {
     "name": "Arthur",
     "password": "Arthurpassword",
     "expenses": [
@@ -11,8 +11,7 @@
       }
     ]
   },
-
-  "cael@gmail.com":{
+  "cael@gmail.com": {
     "name": "Cael",
     "password": "Caelpassword",
     "expenses": [
@@ -30,10 +29,8 @@
       }
     ]
   },
-
-  "emilio@gmail.com":{
+  "emilio@gmail.com": {
     "name": "Emilio",
-    "email": "emilio@gmail.com",
     "password": "Emiliopassword",
     "expenses": [
       {
