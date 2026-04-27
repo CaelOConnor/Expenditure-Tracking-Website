@@ -55,7 +55,7 @@ class App {
     }
     // turn into array for vega and return it 
     return Object.keys(dictionary).map(type => ({
-        catagory: type,
+        category: type,
         amount: dictionary[type]
     }));
   }
@@ -86,8 +86,11 @@ class App {
           type: "ordinal",
           title: "Month"
         },
-        y: { field: "amount", type: "quantitative" },
-        titel: "Amount"
+        y: { 
+          field: "amount", 
+          type: "quantitative",
+          title: "Amount"
+        },
       },
     };
     vegaEmbed("#lineChart", spec);
@@ -114,8 +117,11 @@ class App {
           sort: { field: "amount", order: "descending" },
           title: "Expenses"
         },
-        y: { field: "amount", type: "quantitative" },
-        title: "Amount"
+        y: { 
+          field: "amount", 
+          type: "quantitative",
+          title: "Amount"
+        },
       },
     };
     vegaEmbed("#barChart", spec);
