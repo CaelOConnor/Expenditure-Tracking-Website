@@ -160,16 +160,20 @@ class App {
     }
 
     sortExpenses(){
+        // get value
         const value = this.sortDropdown.value;
-
-        function sortComparator(expense1, expense2){ // a and b
+        // sort comparator for top section
+        function sortComparatorTop(expense1, expense2){ // a and b
             if (value === "Most-Recent"){
                 return expense2.date - expense1.date;
             } 
             else if (value === "Oldest"){
                 return expense1.date - expense2.date;
             }
-            else if (value === "Highest-Expenditure"){
+        }
+        // sort comparator for bottom section
+        function sortComparatorBottom(expense1, expense2){ // a and b
+            if (value === "Highest-Expenditure"){
                 return expense2.amount - expense1.amount; 
             }
             else if (value === "Lowest-Expenditure"){
@@ -177,8 +181,12 @@ class App {
             }
         }
         // sort
-        this.topExpenses.sort(sortComparator);
-        this.bottomExpenses.sort(sortComparator);
+        if (value === "Most-Recent" || value === "Oldest"){
+            this.topExpenses.sort(sortComparatorTop);
+        } 
+        else if (value === "Highest-Expenditure" || value === "Lowest-Expenditure"){
+            this.bottomExpenses.sort(sortComparatorBottom);
+        }
         // re-render
         this.clearExpenses(this.topExpenses);
         this.renderExpenses(this.topExpenses, this.topContainer);
