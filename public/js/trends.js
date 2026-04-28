@@ -33,7 +33,7 @@ class App {
         dictionary[month] += expense.amount;
       }
     }
-    // convert dictionary into an array for vega then return it
+    // turn into array for vega and return it got this from geeks for geeks https://www.geeksforgeeks.org/javascript/convert-dictionary-into-an-array-of-objects-in-javascript/
     return Object.keys(dictionary).map((month) => ({
       month: month,
       amount: dictionary[month],
@@ -53,7 +53,7 @@ class App {
         dictionary[type] += expense.amount;
       }
     }
-    // turn into array for vega and return it
+    // turn into array for vega and return it got this from geeks for geeks https://www.geeksforgeeks.org/javascript/convert-dictionary-into-an-array-of-objects-in-javascript/
     return Object.keys(dictionary).map((type) => ({
       category: type,
       amount: dictionary[type],
