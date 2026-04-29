@@ -184,6 +184,18 @@ class App {
   sortExpenses() {
     // get value
     const value = this.sortDropdown.value;
+    const element = document.getElementById("expense-title");
+
+    // changing row title based on sort type
+    if (value === "Most-Recent") {
+      element.textContent = "Most-Recent";
+    } else if (value === "Oldest") {
+      element.textContent = "Oldest";
+    } else if (value === "Highest-Expenditure") {
+      element.textContent = "Highest-Expenditure";
+    } else if (value === "Lowest-Expenditure") {
+      element.textContent = "Lowest-Expenditure";
+    }
     // sort comparator for top section
     function sortComparatorTop(expense1, expense2) {
       // a and b
