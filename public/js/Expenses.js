@@ -1,278 +1,306 @@
 class Expense {
-    constructor(parentElement, passedAmount, passedType, passedDescription, passedDate){
-        // save parentElement to the object
-        this.parentElement = parentElement;
+  constructor(
+    parentElement,
+    passedAmount,
+    passedType,
+    passedDescription,
+    passedDate,
+  ) {
+    // save parentElement to the object
+    this.parentElement = parentElement;
 
-        // store varaibles
-        this.amount = Number(passedAmount);
-        this.type = passedType;
-        this.description = passedDescription;
-        this.date = new Date(passedDate);
+    // store varaibles
+    this.amount = Number(passedAmount);
+    this.type = passedType;
+    this.description = passedDescription;
+    this.date = new Date(passedDate);
 
-        // create the div as an instance variable, give it the class "post"
-        this.div = document.createElement("div");
-        this.div.classList.add("expenditure");
+    // create the div as an instance variable, give it the class "post"
+    this.div = document.createElement("div");
+    this.div.classList.add("expenditure");
 
-        // edit
-        const editBtn = document.createElement("button");
-        editBtn.classList.add("expenditure-edit-btn");
-        editBtn.textContent = "Edit";
-        this.div.appendChild(editBtn);
+    // edit
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("expenditure-edit-btn");
+    editBtn.textContent = "Edit";
+    this.div.appendChild(editBtn);
 
-        // delete
-        const deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("expenditure-delete-btn");
-        deleteBtn.textContent = "Delete";
-        this.div.appendChild(deleteBtn);
+    editBtn.addEventListener("click", this.editExpense);
 
-        // amount
-        const amount = document.createElement('h2');
-        amount.classList.add("amount");
-        amount.textContent = `$${this.amount}`;
-        this.div.appendChild(amount);
+    // delete
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("expenditure-delete-btn");
+    deleteBtn.textContent = "Delete";
+    this.div.appendChild(deleteBtn);
 
-        // type
-        const type = document.createElement('p');
-        type.classList.add("type");
-        type.textContent = this.type;
-        this.div.appendChild(type);
+    // amount
+    const amount = document.createElement("h2");
+    amount.classList.add("amount");
+    amount.textContent = `$${this.amount}`;
+    this.div.appendChild(amount);
 
-        // description
-        const description = document.createElement('p');
-        description.classList.add("description");
-        description.textContent = this.description;
-        this.div.appendChild(description);
+    // type
+    const type = document.createElement("p");
+    type.classList.add("type");
+    type.textContent = this.type;
+    this.div.appendChild(type);
 
-        // date
-        const date = document.createElement('p');
-        date.classList.add("date");
-        date.textContent = this.date.toLocaleDateString(); // makes date readable
-        this.div.appendChild(date);
-        
-        // add the div to the parent element
-        this.parentElement.appendChild(this.div);
-    }
+    // description
+    const description = document.createElement("p");
+    description.classList.add("description");
+    description.textContent = this.description;
+    this.div.appendChild(description);
+
+    // date
+    const date = document.createElement("p");
+    date.classList.add("date");
+    date.textContent = this.date.toLocaleDateString(); // makes date readable
+    this.div.appendChild(date);
+
+    // add the div to the parent element
+    this.parentElement.appendChild(this.div);
+  }
 }
 
 class App {
-    constructor(){
-        // set up a reference to the post container in the html
-        this.topContainer = document.querySelector("#recent-expenses");
-        this.bottomContainer = document.querySelector("#highest-expenses"); 
-        
-        this.topList = document.createElement("div");
-        this.bottomList = document.createElement("div");
-        //this.classList.add("expense-list");
-        this.topContainer.appendChild(this.topList);
-        this.bottomContainer.appendChild(this.bottomList);
-        // set up an array variable that will hold the posts
-        this.topExpenses = [];
-        this.bottomExpenses = [];
-        this.submitExpense = this.submitExpense.bind(this);
+  constructor() {
+    // set up a reference to the post container in the html
+    this.topContainer = document.querySelector("#recent-expenses");
+    // this.bottomContainer = document.querySelector("#highest-expenses");
 
-        document.querySelector("#popup-submit-btn").addEventListener("click", this.submitExpense);
+    this.topList = document.createElement("div");
+    // this.bottomList = document.createElement("div");
+    //this.classList.add("expense-list");
+    this.topContainer.appendChild(this.topList);
+    // this.bottomContainer.appendChild(this.bottomList);
+    // set up an array variable that will hold the posts
+    this.topExpenses = [];
+    // this.bottomExpenses = [];
+    this.submitExpense = this.submitExpense.bind(this);
 
-        // sorting based on dropdown
-        this.sortDropdown = document.querySelector("#SortBy");
-        this.sortExpenses = this.sortExpenses.bind(this);
-        this.sortDropdown.addEventListener("change", this.sortExpenses);
+    document
+      .querySelector("#popup-submit-btn")
+      .addEventListener("click", this.submitExpense);
 
-        // searching
-        this.searchInput = document.querySelector("#search");
-        this.searchExpenses = this.searchExpenses.bind(this);
-        this.searchInput.addEventListener("input", this.searchExpenses);
+    // sorting based on dropdown
+    this.sortDropdown = document.querySelector("#SortBy");
+    this.sortExpenses = this.sortExpenses.bind(this);
+    this.sortDropdown.addEventListener("change", this.sortExpenses);
 
-        this.loadExpenses();
+    // searching
+    this.searchInput = document.querySelector("#search");
+    this.searchExpenses = this.searchExpenses.bind(this);
+    this.searchInput.addEventListener("input", this.searchExpenses);
+
+    this.loadExpenses();
+  }
+
+  async loadExpenses() {
+    // get data
+    const response = await fetch("/expenses");
+    const expenses = await response.json();
+
+    // loop over expenses for the user and create expenses
+    for (const expense of expenses) {
+      this.createExpense(
+        expense.amount,
+        expense.type,
+        expense.description,
+        expense.date,
+      );
+    }
+  }
+
+  createExpense(amount, type, description, date) {
+    // create expense for top row
+    const topExpense = new Expense(
+      this.topContainer,
+      amount,
+      type,
+      description,
+      date,
+    );
+    this.topExpenses.push(topExpense);
+    // create expense for bottom row
+    // const bottomExpense = new Expense(
+    //   this.bottomContainer,
+    //   amount,
+    //   type,
+    //   description,
+    //   date,
+    // );
+    // this.bottomExpenses.push(bottomExpense);
+  }
+
+  async submitExpense() {
+    // get values
+    const amount = document.querySelector("#amount").value;
+    const type = document.querySelector("#type-selector").value;
+    const description = document.querySelector("#description").value;
+    const date = document.querySelector("#date").value;
+
+    // make sure every field has info
+    if (!amount || !type || !description || !date) {
+      alert("Please fill all information");
+      return;
     }
 
-    async loadExpenses() {
-        // get data
-        const response = await fetch('/expenses');
-        const expenses = await response.json();
+    // make expense
+    const newExpense = { amount, type, description, date };
+    // send to server
+    const response = await fetch("/createExpense", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newExpense),
+    });
 
-        // loop over expenses for the user and create expenses
-        for(const expense of expenses){
-            this.createExpense(expense.amount, expense.type, expense.description, expense.date);
-        }
+    const result = await response.json();
+
+    // if saved then update frontend otherwise alert the error
+    if (result.success) {
+      //make expense
+      this.createExpense(amount, type, description, date);
+      //hide popup
+      document.querySelector(".add-item-popup").style.display = "none";
+    } else {
+      alert("Error sending expense to server");
     }
+  }
 
-    createExpense(amount, type, description, date) {
-        // create expense for top row
-        const topExpense = new Expense(
-            this.topContainer, amount, type, description, date
-        );
-        this.topExpenses.push(topExpense);
-        // create expense for bottom row
-        const bottomExpense = new Expense(
-            this.bottomContainer, amount, type, description, date
-        );
-        this.bottomExpenses.push(bottomExpense);
+  clearExpenses(expenseArray) {
+    // remove all expenses
+    for (const expense of expenseArray) {
+      expense.div.remove();
     }
+  }
 
-    async submitExpense() {
-        // get values
-        const amount = document.querySelector("#amount").value;
-        const type = document.querySelector("#type-selector").value;
-        const description = document.querySelector("#description").value;
-        const date = document.querySelector("#date").value;
-
-        // make sure every field has info
-        if (!amount || !type || !description || !date){
-            alert("Please fill all information");
-            return;
-        }
-
-        // make expense
-        const newExpense = {amount, type, description, date};
-        // send to server
-        const response = await fetch('/createExpense', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(newExpense)
-        });
-
-        const result = await response.json();
-
-        // if saved then update frontend otherwise alert the error
-        if (result.success) {
-            //make expense
-            this.createExpense(amount, type, description, date);
-            //hide popup
-            document.querySelector(".add-item-popup").style.display = "none";
-        } else {
-            alert("Error sending expense to server");
-        }
-
+  renderExpenses(expenseArray, container) {
+    // add expenses back
+    for (const expense of expenseArray) {
+      container.appendChild(expense.div);
     }
+  }
 
-    clearExpenses(expenseArray){
-        // remove all expenses
-        for(const expense of expenseArray){
-            expense.div.remove();
-        }
+  sortExpenses() {
+    // get value
+    const value = this.sortDropdown.value;
+    // sort comparator for top section
+    function sortComparatorTop(expense1, expense2) {
+      // a and b
+      if (value === "Most-Recent") {
+        return expense2.date - expense1.date;
+      } else if (value === "Oldest") {
+        return expense1.date - expense2.date;
+      } else if (value === "Highest-Expenditure") {
+        return expense2.amount - expense1.amount;
+      } else if (value === "Lowest-Expenditure") {
+        return expense1.amount - expense2.amount;
+      }
     }
-    
-    renderExpenses(expenseArray, container){
-        // add expenses back
-        for(const expense of expenseArray){
-            container.appendChild(expense.div);
-        }
-    }
-
-    sortExpenses(){
-        // get value
-        const value = this.sortDropdown.value;
-        // sort comparator for top section
-        function sortComparatorTop(expense1, expense2){ // a and b
-            if (value === "Most-Recent"){
-                return expense2.date - expense1.date;
-            } 
-            else if (value === "Oldest"){
-                return expense1.date - expense2.date;
-            }
-        }
-        // sort comparator for bottom section
-        function sortComparatorBottom(expense1, expense2){ // a and b
-            if (value === "Highest-Expenditure"){
-                return expense2.amount - expense1.amount; 
-            }
-            else if (value === "Lowest-Expenditure"){
-                return expense1.amount - expense2.amount; 
-            }
-        }
-        // sort
-        if (value === "Most-Recent" || value === "Oldest"){
-            this.topExpenses.sort(sortComparatorTop);
-        } 
-        else if (value === "Highest-Expenditure" || value === "Lowest-Expenditure"){
-            this.bottomExpenses.sort(sortComparatorBottom);
-        }
-        // re-render
-        this.clearExpenses(this.topExpenses);
-        this.renderExpenses(this.topExpenses, this.topContainer);
-        this.clearExpenses(this.bottomExpenses);
-        this.renderExpenses(this.bottomExpenses, this.bottomContainer);
-    }
-
-    searchExpenses(){
-        const search = this.searchInput.value.toLowerCase();
-        //filter for top
-        const top = this.topExpenses.filter(expense =>
-            expense.amount.toString().includes(search) ||
-            expense.type.toLowerCase().includes(search) ||
-            expense.description.toLowerCase().includes(search) ||
-            expense.date.toLocaleDateString().includes(search) 
-        );
-        // filter for bottom
-        const bottom = this.bottomExpenses.filter(expense =>
-            expense.amount.toString().includes(search) ||
-            expense.type.toLowerCase().includes(search) ||
-            expense.description.toLowerCase().includes(search) ||
-            expense.date.toLocaleDateString().includes(search)
-        );
-        //render
-        this.clearExpenses(this.topExpenses);
-        this.renderExpenses(top, this.topContainer);
-        this.clearExpenses(this.bottomExpenses);
-        this.renderExpenses(bottom, this.bottomContainer);
-    }
-
-    // async deleteExpense(expense) {
-    //     // send to server
-    //     const response = await fetch('/deleteExpense', {
-    //         method: "POST",
-    //         headers: {"Content-Type": "application/json"},
-    //         body: JSON.stringify({
-    //             amount: expense.amount,
-    //             type: expense.type,
-    //             description: expense.description,
-    //             date: expense.date.toLocaleDateString()
-    //         })
-    //     });
-
-    //     const result = await response.json();
-
-    //     // if saved then update frontend otherwise alert the error
-    //     if (result.success) {
-    //         // remove from top and bottom arrays
-    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
-    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
-    //     } else {
-    //         alert("Error deleting expense in server");
-    //     }
+    // sort comparator for bottom section
+    // function sortComparatorBottom(expense1, expense2) {
+    //   // a and b
+    //   if (value === "Highest-Expenditure") {
+    //     return expense2.amount - expense1.amount;
+    //   } else if (value === "Lowest-Expenditure") {
+    //     return expense1.amount - expense2.amount;
+    //   }
     // }
+    // sort
+    if (value === "Most-Recent" || value === "Oldest") {
+      this.topExpenses.sort(sortComparatorTop);
+    } else if (
+      value === "Highest-Expenditure" ||
+      value === "Lowest-Expenditure"
+    ) {
+      this.topExpenses.sort(sortComparatorTop);
+    }
+    // re-render
+    this.clearExpenses(this.topExpenses);
+    this.renderExpenses(this.topExpenses, this.topContainer);
+    // this.clearExpenses(this.bottomExpenses);
+    // this.renderExpenses(this.bottomExpenses, this.bottomContainer);
+  }
 
+  searchExpenses() {
+    const search = this.searchInput.value.toLowerCase();
+    //filter for top
+    const top = this.topExpenses.filter(
+      (expense) =>
+        expense.amount.toString().includes(search) ||
+        expense.type.toLowerCase().includes(search) ||
+        expense.description.toLowerCase().includes(search) ||
+        expense.date.toLocaleDateString().includes(search),
+    );
+    // filter for bottom
+    // const bottom = this.bottomExpenses.filter(
+    //   (expense) =>
+    //     expense.amount.toString().includes(search) ||
+    //     expense.type.toLowerCase().includes(search) ||
+    //     expense.description.toLowerCase().includes(search) ||
+    //     expense.date.toLocaleDateString().includes(search),
+    // );
+    //render
+    this.clearExpenses(this.topExpenses);
+    this.renderExpenses(top, this.topContainer);
+    // this.clearExpenses(this.bottomExpenses);
+    // this.renderExpenses(bottom, this.bottomContainer);
+  }
 
-    // async editExpense(expense, newData) {
-    //     // send to server
-    //     const response = await fetch('/editExpense', {
-    //         method: "POST",
-    //         headers: {"Content-Type": "application/json"},
-    //         body: JSON.stringify({
-    //             Originalamount: expense.amount,
-    //             Originaltype: expense.type,
-    //             Originaldescription: expense.description,
-    //             Originaldate: expense.date.toLocaleDateString(),
+  // async deleteExpense(expense) {
+  //     // send to server
+  //     const response = await fetch('/deleteExpense', {
+  //         method: "POST",
+  //         headers: {"Content-Type": "application/json"},
+  //         body: JSON.stringify({
+  //             amount: expense.amount,
+  //             type: expense.type,
+  //             description: expense.description,
+  //             date: expense.date.toLocaleDateString()
+  //         })
+  //     });
 
-    //             newamount: newData.amount,
-    //             newtype: newData.type,
-    //             newadescription: newData.description,
-    //             newadate: newData.date.toLocaleDateString(),
-    //         })
-    //     });
+  //     const result = await response.json();
 
-    //     const result = await response.json();
+  //     // if saved then update frontend otherwise alert the error
+  //     if (result.success) {
+  //         // remove from top and bottom arrays
+  //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
+  //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
+  //     } else {
+  //         alert("Error deleting expense in server");
+  //     }
+  // }
 
-    //     // if saved then update frontend otherwise alert the error
-    //     if (result.success) {
-    //         // remove from top and bottom arrays
-    //         this.topExpenses = this.topExpenses.filter(e => e !== expense);
-    //         this.bottomExpenses = this.bottomExpenses.filter(e => e !== expense);
-    //     } else {
-    //         alert("Error editing expense in server");
-    //     }
-    // }
+  async editExpense(expense, newData) {
+    // send to server
+    const response = await fetch("/editExpense", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        originalAmount: expense.amount,
+        originalType: expense.type,
+        originalDescription: expense.description,
+        originalDate: expense.date.toLocaleDateString(),
 
+        newAmount: newData.amount,
+        newType: newData.type,
+        newDescription: newData.description,
+        newDate: newData.date.toLocaleDateString(),
+      }),
+    });
+
+    const result = await response.json();
+
+    // if saved then update frontend otherwise alert the error
+    if (result.success) {
+      // remove from top and bottom arrays
+      this.topExpenses = this.topExpenses.filter((e) => e !== expense);
+      // this.bottomExpenses = this.bottomExpenses.filter((e) => e !== expense);
+    } else {
+      alert("Error editing expense in server");
+    }
+  }
 }
 
 export default App;
