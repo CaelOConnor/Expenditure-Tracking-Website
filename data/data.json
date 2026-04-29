@@ -7,13 +7,13 @@
         "amount": 70,
         "type": "miscellaneous",
         "description": "Bought the new Battlefield 6 game",
-        "date": "03/25/2026"
+        "date": "01/25/2026"
       },
       {
         "amount": 1000,
         "type": "miscellaneous",
         "description": "Bought a new TV",
-        "date": "03/24/2026"
+        "date": "02/24/2026"
       },
       {
         "amount": 2500,
@@ -25,21 +25,20 @@
         "amount": 150,
         "type": "food",
         "description": "Groceries for the week",
-        "date": "03/23/2026"
+        "date": "04/23/2026"
       },
       {
         "amount": 200,
         "type": "bills",
         "description": "Paid credit card bill",
-        "date": "03/07/2026"
+        "date": "05/07/2026"
       },
       {
         "amount": 50,
         "type": "bills",
         "description": "Paid phone bill",
-        "date": "04/03/2026"
+        "date": "06/03/2026"
       }
-
     ]
   },
   "cael@gmail.com": {

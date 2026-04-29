@@ -26,14 +26,14 @@
 .nav-list {
   list-style-type: none;
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   gap: 2vw;
 }
 .nav-list li {
   flex: 1;
 }
 .nav-list a {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 /* Dropdown menu  */
@@ -107,4 +107,9 @@ body {
   border: none;
   border-radius: 30px;
   cursor: pointer;
+}
+
+.container {
+  display: flex;
+  gap: 10px;
 }
