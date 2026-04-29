@@ -10,25 +10,28 @@ app.use(express.static('public'));
 // when user logs in
 app.post('/login', function(req, res){
     // get email and password from request
-    const {email, password} = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
     // get user
     const user = data[email];
 
     // check if user exits and password matches
     if (user && user.password === password){
-        res.json({success: true});
+        res.json({success: true, message: 'User authentication successful.'});
     } else {
-        res.json({success: false});
+        res.json({success: false, message: 'Incorrect password.'});
     }  
 });
 
 // when user make new account
 app.post('/register', function(req, res){
     // get data from request body 
-    const {name, email, password} = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
     // check if email already exists
     if (data[email]) {
-        return res.json({success: false});
+        return res.json({success: false,  message: 'Username is already taken.' });
     }
     // create new user
     data[email] = {
@@ -40,14 +43,14 @@ app.post('/register', function(req, res){
     // save to file
     fs.writeFile(
         './data/data.json',
-        JSON.stringify(data),
+        JSON.stringify(data, null, 4),
         'utf-8',
         function(err) {
             if(err) {
                 console.log(err);
                 return res.json({success: false});
             }
-            res.json({success: true});
+            res.json({success: true, message: "Registration successful."});
         });
 });
 
@@ -71,7 +74,7 @@ app.post('/createExpense', function(req, res){
     // save to file
     fs.writeFile(
         './data/data.json',
-        JSON.stringify(data),
+        JSON.stringify(data, null, 4),
         'utf-8',
         function(err) {
             if(err) {
@@ -156,7 +159,7 @@ app.post('/limit', function(req, res){
     // save to file
     fs.writeFile(
         './data/data.json',
-        JSON.stringify(posts),
+        JSON.stringify(posts, null, 4),
         'utf-8',
         function(err) {
             if(err) console.log(err);
