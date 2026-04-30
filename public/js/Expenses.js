@@ -25,12 +25,6 @@ class Expense {
     this.div = document.createElement("div");
     this.div.classList.add("expenditure");
 
-    // edit
-    const editBtn = document.createElement("button");
-    editBtn.classList.add("expenditure-edit-btn");
-    editBtn.textContent = "Edit";
-    this.div.appendChild(editBtn);
-
     // delete
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("expenditure-delete-btn");
@@ -72,16 +66,10 @@ class App {
   constructor() {
     // set up a reference to the post container in the html
     this.topContainer = document.querySelector("#recent-expenses");
-    // this.bottomContainer = document.querySelector("#highest-expenses");
 
     this.topList = document.createElement("div");
-    // this.bottomList = document.createElement("div");
-    //this.classList.add("expense-list");
     this.topContainer.appendChild(this.topList);
-    // this.bottomContainer.appendChild(this.bottomList);
-    // set up an array variable that will hold the posts
     this.topExpenses = [];
-    // this.bottomExpenses = [];
     this.submitExpense = this.submitExpense.bind(this);
 
     document
@@ -131,15 +119,6 @@ class App {
       (this.deleteExpense = this.deleteExpense.bind(this)),
     );
     this.topExpenses.push(topExpense);
-    // create expense for bottom row
-    // const bottomExpense = new Expense(
-    //   this.bottomContainer,
-    //   amount,
-    //   type,
-    //   description,
-    //   date,
-    // );
-    // this.bottomExpenses.push(bottomExpense);
   }
 
   async submitExpense() {
@@ -189,7 +168,6 @@ class App {
     let total = 0;
     // loops each expenses to get the total
     this.topExpenses.forEach((e) => (total += Number(e.amount)));
-    // this.bottomExpenses.forEach(e => total +=  Number(e.amount));
     return total;
   }
 
@@ -235,15 +213,7 @@ class App {
         return expense1.amount - expense2.amount;
       }
     }
-    // sort comparator for bottom section
-    // function sortComparatorBottom(expense1, expense2) {
-    //   // a and b
-    //   if (value === "Highest-Expenditure") {
-    //     return expense2.amount - expense1.amount;
-    //   } else if (value === "Lowest-Expenditure") {
-    //     return expense1.amount - expense2.amount;
-    //   }
-    // }
+
     // sort
     if (value === "Most-Recent" || value === "Oldest") {
       this.topExpenses.sort(sortComparatorTop);
@@ -256,8 +226,6 @@ class App {
     // re-render
     this.clearExpenses(this.topExpenses);
     this.renderExpenses(this.topExpenses, this.topContainer);
-    // this.clearExpenses(this.bottomExpenses);
-    // this.renderExpenses(this.bottomExpenses, this.bottomContainer);
   }
 
   searchExpenses() {
@@ -270,19 +238,10 @@ class App {
         expense.description.toLowerCase().includes(search) ||
         expense.date.toLocaleDateString().includes(search),
     );
-    // filter for bottom
-    // const bottom = this.bottomExpenses.filter(
-    //   (expense) =>
-    //     expense.amount.toString().includes(search) ||
-    //     expense.type.toLowerCase().includes(search) ||
-    //     expense.description.toLowerCase().includes(search) ||
-    //     expense.date.toLocaleDateString().includes(search),
-    // );
+
     //render
     this.clearExpenses(this.topExpenses);
     this.renderExpenses(top, this.topContainer);
-    // this.clearExpenses(this.bottomExpenses);
-    // this.renderExpenses(bottom, this.bottomContainer);
   }
 
   async deleteExpense(expense) {
@@ -313,35 +272,6 @@ class App {
     }
   }
 
-  async editExpense(expense, newData) {
-    // send to server
-    const response = await fetch("/editExpense", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        originalAmount: expense.amount,
-        originalType: expense.type,
-        originalDescription: expense.description,
-        originalDate: expense.date.toLocaleDateString(),
-
-        newAmount: newData.amount,
-        newType: newData.type,
-        newDescription: newData.description,
-        newDate: newData.date.toLocaleDateString(),
-      }),
-    });
-
-    const result = await response.json();
-
-    // if saved then update frontend otherwise alert the error
-    if (result.success) {
-      // remove from top and bottom arrays
-      this.topExpenses = this.topExpenses.filter((e) => e !== expense);
-      // this.bottomExpenses = this.bottomExpenses.filter((e) => e !== expense);
-    } else {
-      alert("Error editing expense in server");
-    }
-  }
 }
 
 export default App;
