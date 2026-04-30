@@ -138,6 +138,7 @@ class App {
       params: [
         { name: "select", select: { type: "point", fields: ["category"] } },
       ],
+      // pie chart interaction: https://stackoverflow.com/questions/78166504/possible-to-change-radius-of-section-in-vega-lite-arc-pie-chart-plot-on-click
       mark: {
         type: "arc",
         tooltip: true,

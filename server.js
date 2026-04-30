@@ -102,7 +102,7 @@ app.delete("/deleteExpense", function (req, res) {
 
     const jsonData = JSON.parse(jsonString);
 
-    // filter out objects from the array by matching description: https://www.geeksforgeeks.org/javascript/how-to-remove-specific-json-object-from-array-javascript/
+    // filter out object from the array by matching description: https://www.geeksforgeeks.org/javascript/how-to-remove-specific-json-object-from-array-javascript/
     jsonData[user].expenses = jsonData[user].expenses.filter(
       (obj) => obj.description !== description,
     );
@@ -125,7 +125,6 @@ app.delete("/deleteExpense", function (req, res) {
     );
   });
 });
-
 
 // getting user limits
 app.get("/limit", function (req, res) {

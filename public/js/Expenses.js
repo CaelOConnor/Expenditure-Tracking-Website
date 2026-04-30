@@ -18,7 +18,7 @@ class Expense {
     this.description = passedDescription;
     this.date = new Date(passedDate);
 
-    // create callback for deleteExpense
+    // create callback for deleteExpense: https://esdiscuss.org/topic/better-way-to-maintain-this-reference-on-event-listener-functions
     this.deleteCB = deleteCB;
 
     // create the div as an instance variable, give it the class "post"
@@ -259,7 +259,6 @@ class App {
     });
 
     const result = await response.json();
-    console.log("result", result);
 
     // if saved then update frontend otherwise alert the error
     if (result.success) {
@@ -271,7 +270,6 @@ class App {
       alert("Error deleting expense in server");
     }
   }
-
 }
 
 export default App;
