@@ -135,11 +135,6 @@ class App {
       width: 400,
       height: 400,
       padding: 20,
-      // mark: { type: "arc", tooltip: true },
-      // encoding: {
-      //   theta: { field: "amount", type: "quantitative" },
-      //   color: { field: "category", type: "nominal" },
-      // },
       params: [
         { name: "select", select: { type: "point", fields: ["category"] } },
       ],

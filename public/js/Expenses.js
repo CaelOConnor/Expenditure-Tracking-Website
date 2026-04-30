@@ -18,6 +18,7 @@ class Expense {
     this.description = passedDescription;
     this.date = new Date(passedDate);
 
+    // create callback for deleteExpense
     this.deleteCB = deleteCB;
 
     // create the div as an instance variable, give it the class "post"
@@ -35,6 +36,7 @@ class Expense {
     deleteBtn.classList.add("expenditure-delete-btn");
     deleteBtn.textContent = "Delete";
     this.div.appendChild(deleteBtn);
+    // add evenlistener for delete button using callback: https://www.reddit.com/r/learnjavascript/comments/xrxdzd/eventlistener_within_class/
     deleteBtn.addEventListener("click", () => this.deleteCB(this));
 
     // amount
