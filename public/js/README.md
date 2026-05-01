@@ -1,5 +1,7 @@
 This README is specifically related to this projects JavaScript files.
 
+The server.js file handles the backend for the expense tracker. It sets up the endpoints for all the API requests in the other JS files and also writes to the data.json file for any changes that occur in the backend like whenever there is a new registered user or deletion of an expense.
+
 The script.js file is a function that handles the login.html page. When a user clicks register and account it the
 form on the screen to register and account. From the register account screen if the user hits the login button the
 screen goes back to the sign in form. This fucntion is what swaps the form's content.
