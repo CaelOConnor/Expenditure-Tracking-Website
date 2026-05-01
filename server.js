@@ -94,36 +94,27 @@ app.post("/createExpense", function (req, res) {
 app.delete("/deleteExpense", function (req, res) {
   const user = "arthur@gmail.com";
   const description = req.body.description;
-  fs.readFile("./data/data.json", "utf-8", (err, jsonString) => {
-    if (err) {
-      console.log("Error reading file from disk:", err);
-      return;
-    }
 
-    const jsonData = JSON.parse(jsonString);
+  // filter out object from the array by matching description: https://www.geeksforgeeks.org/javascript/how-to-remove-specific-json-object-from-array-javascript/
+  data[user].expenses = data[user].expenses.filter(
+    (obj) => obj.description !== description,
+  );
 
-    // filter out object from the array by matching description: https://www.geeksforgeeks.org/javascript/how-to-remove-specific-json-object-from-array-javascript/
-    jsonData[user].expenses = jsonData[user].expenses.filter(
-      (obj) => obj.description !== description,
-    );
-
-    // save to file
-    fs.writeFile(
-      "./data/data.json",
-      JSON.stringify(jsonData, null, 4),
-      "utf-8",
-      function (err) {
-        if (err) {
-          console.log(err);
-          res.json({ success: false });
-        } else {
-          data[user].expenses = jsonData[user].expenses;
-          console.log("Data Written successfully");
-          res.json({ success: true });
-        }
-      },
-    );
-  });
+  // save to file
+  fs.writeFile(
+    "./data/data.json",
+    JSON.stringify(data, null, 4),
+    "utf-8",
+    function (err) {
+      if (err) {
+        console.log(err);
+        res.json({ success: false });
+      } else {
+        console.log("Data Written successfully");
+        res.json({ success: true });
+      }
+    },
+  );
 });
 
 // getting user limits

@@ -18,7 +18,7 @@ class Expense {
     this.description = passedDescription;
     this.date = new Date(passedDate);
 
-    // create callback for deleteExpense: https://esdiscuss.org/topic/better-way-to-maintain-this-reference-on-event-listener-functions
+    // create callback for deleteExpense method from App: https://esdiscuss.org/topic/better-way-to-maintain-this-reference-on-event-listener-functions
     this.deleteCB = deleteCB;
 
     // create the div as an instance variable, give it the class "post"
@@ -245,7 +245,6 @@ class App {
   }
 
   async deleteExpense(expense) {
-    console.log("deleteExpense called", expense);
     // send to server
     const response = await fetch("/deleteExpense", {
       method: "DELETE",
@@ -262,7 +261,6 @@ class App {
 
     // if saved then update frontend otherwise alert the error
     if (result.success) {
-      console.log("removing div", expense.div);
       expense.div.remove();
       // remove from array
       this.topExpenses = this.topExpenses.filter((e) => e !== expense);
